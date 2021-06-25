@@ -9,5 +9,6 @@ public class Main {
 	// write your code here
         //System.out.println(Membro.apresentacoesRegulares.get(Funcao.HEAVY_LIFTER));
         Sistema sistema = new Sistema();
+        System.out.println(sistema.membros);
     }
 }

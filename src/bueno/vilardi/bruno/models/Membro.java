@@ -4,6 +4,7 @@ import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.interfaces.Apresentacao;
 import bueno.vilardi.bruno.interfaces.PostarMensagem;
+import com.sun.jdi.IntegerType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,9 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
     protected String assinaturaRegular;
     protected String assinaturaExtra;
 
+    // Atributos da classe Membro
+    private static Integer contadorId = 1;
+
     /**
      * Contrutor da classe Membro
      * @param username nome do usuario
@@ -29,9 +33,12 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
      * @param role funcao do usuario
      */
     public Membro(String username, String senha, Funcao role) {
+        this.id = Membro.contadorId;
         this.senha = senha;
         this.username = username;
         this.role = role;
+
+        Membro.contadorId ++;
     }
 
 

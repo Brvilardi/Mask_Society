@@ -11,16 +11,30 @@ import java.util.Scanner;
 
 public class Sistema {
 
-    private Map<Integer, Membro> membros;
+    public Map<Integer, Membro> membros;
+    private Integer contadorId = 1;
     public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
     private Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Construtor da classe Sistema, inicializa os parametros mínimos para funcionamento
+     */
     public Sistema() {
         this.membros = new HashMap<Integer, Membro>();
         Membro usuario = criarMembro();
-        System.out.println(usuario);
-        System.out.println(usuario.getClass());
+        membros.put(usuario.id, usuario);
     }
+
+    public void run(){
+        while(true){
+            exibirMenu();
+        }
+    }
+
+    private void exibirMenu() {
+        System.out.println();
+    }
+
 
     private Funcao decodificarTipoMembro(String tipo){
         System.out.println("tipo: " + tipo);
