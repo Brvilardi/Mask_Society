@@ -15,6 +15,7 @@ import java.util.Set;
  */
 public abstract class Membro implements Apresentacao, PostarMensagem {
     // Atributos gerais de qualquer Membro
+    public Integer id;
     protected String senha;
     protected String username;
     protected Funcao role;
@@ -42,5 +43,13 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         return null; //TO_DO pegar horário do sistema
     }
 
-
+    @Override
+    public String toString() {
+        return "Membro{" +
+                "id=" + id +
+                ", senha='" + senha + '\'' +
+                ", username='" + username + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

@@ -8,5 +8,6 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
         //System.out.println(Membro.apresentacoesRegulares.get(Funcao.HEAVY_LIFTER));
+        Sistema sistema = new Sistema();
     }
 }
