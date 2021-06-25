@@ -3,11 +3,12 @@ package bueno.vilardi.bruno.models;
 import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.interfaces.Apresentacao;
+import bueno.vilardi.bruno.interfaces.PostarMensagem;
 
 /*
 Classe Membro, que representa o básico de qualquer membro
  */
-public abstract class Membro implements Apresentacao {
+public abstract class Membro implements Apresentacao, PostarMensagem {
     protected String senha;
     protected String username;
     protected Funcao role;
