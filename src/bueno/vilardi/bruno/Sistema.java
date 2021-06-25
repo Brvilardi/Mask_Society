@@ -23,6 +23,11 @@ public class Sistema {
         this.membros = new HashMap<Integer, Membro>();
         Membro usuario = criarMembro();
         membros.put(usuario.id, usuario);
+
+        Membro usuario2 = criarMembro();
+        membros.put(usuario2.id, usuario2);
+        System.out.println("content: ");
+        Map2CSV("123", membros);
     }
 
     public void run(){
@@ -32,9 +37,22 @@ public class Sistema {
     }
 
     private void exibirMenu() {
-        System.out.println();
+        System.out.println("Menu Inicial:");
     }
 
+    private void Map2CSV(String nomeArquivo, Map<Integer, Membro> myMap){
+        StringBuilder builder = new StringBuilder();
+        for (Integer key : myMap.keySet()) {
+            builder.append(key);
+            builder.append(";");
+            builder.append(myMap.get(key));
+            builder.append("\r\n");
+        }
+
+        String content = builder.toString().trim();
+        System.out.println(content);
+
+    }
 
     private Funcao decodificarTipoMembro(String tipo){
         System.out.println("tipo: " + tipo);
