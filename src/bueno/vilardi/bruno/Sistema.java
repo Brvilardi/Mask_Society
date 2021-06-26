@@ -21,21 +21,23 @@ public class Sistema {
      * Construtor da classe Sistema, inicializa os parametros mínimos para funcionamento
      */
     public Sistema() {
-//        this.membros = new HashMap<Integer, Membro>();
-//        Membro usuario = criarMembro();
-//        membros.put(usuario.id, usuario);
-//
-//        Membro usuario2 = criarMembro();
-//        membros.put(usuario2.id, usuario2);
-//        System.out.println("content: ");
-//        Map2CSV("123", membros);
+        // Inicializa o mapa de membros em memória
+        this.membros = new HashMap<Integer, Membro>();
+
+        //Abre o arquivo CSV com os dados
+        File tempFile = new File("arquivo_super_Secreto_nao_abrir.csv");
+        boolean exists = tempFile.exists();
+        System.out.println(exists + "");
+
+
+        criarMembro();
+
     }
 
     public Sistema(boolean op){
         this.membros = new HashMap<Integer, Membro>();
-        Membro usuario = criarMembro("bruno", "1234", "3");
+        criarMembro("bruno", "1234", Funcao.HEAVY_LIFTER);
         Membro usuario2 = new HeavyLifter("martin", "1234", Funcao.HEAVY_LIFTER);
-        membros.put(usuario.id, usuario);
         membros.put(usuario2.id, usuario2);
 
     }
@@ -91,8 +93,8 @@ public class Sistema {
                 // CSV → id;nome;senha;role
                 String linha = scanner.nextLine();
                 String[] dados = linha.split(";");
+                criarMembro(dados[1], dados[2], Funcao.valueOf(dados[3]));
 
-                System.out.println(linha);
             }
 
 
@@ -143,15 +145,13 @@ public class Sistema {
     }
 
 
-    private Membro criarMembro(){
+    private void criarMembro(){
         List<String> dados = pedirMembro();
-        return criarMembro(dados.get(0), dados.get(1), dados.get(2));
+        criarMembro(dados.get(0), dados.get(1), decodificarTipoMembro(dados.get(2)));
     }
 
-    private Membro criarMembro(String nome, String senha, String tipo) {
+    private void criarMembro(String nome, String senha, Funcao funcao) {
 
-        Funcao funcao = decodificarTipoMembro(tipo);
-        if(funcao == null){ return null; }
         // Criar o membro
         Membro membro;
         switch(funcao) {
@@ -171,7 +171,7 @@ public class Sistema {
                 throw new IllegalStateException("Unexpected value: " + funcao);
         }
         // Retorna o usuario recém criado
-        return membro;
+        this.membros.put(membro.id, membro);
 
 
 
