@@ -4,11 +4,10 @@ import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.models.*;
 
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Sistema {
@@ -63,7 +62,7 @@ public class Sistema {
             // Cria uma String com todos os dados
             StringBuilder builder = new StringBuilder();
             for (Integer key : myMap.keySet()) {
-                builder.append(myMap.get(key));
+                builder.append(myMap.get(key).toCSV());
                 builder.append("\r\n");
             }
             String content = builder.toString().trim();
@@ -78,6 +77,28 @@ public class Sistema {
         }
         return "";
     }
+
+    public String CSV2Map(String nomeArquivo, Map<Integer, Membro> myMap){
+        File file = new File("asd.csv");
+
+        //Realiza a leitura
+        try {
+            // Cria elemento para iterar pelo arquivo
+            Scanner scanner = new Scanner(file);
+
+            // Itera pelos elementos do scanner
+            while(scanner.hasNext()){
+                String linha = scanner.nextLine();
+                System.out.println(linha);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     private Funcao decodificarTipoMembro(String tipo){
         System.out.println("tipo: " + tipo);
