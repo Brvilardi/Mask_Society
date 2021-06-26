@@ -17,6 +17,7 @@ public class Sistema {
     public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
     private Scanner scanner = new Scanner(System.in);
     private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
+    private Membro usuarioLogado;
 
 
     /**
@@ -81,12 +82,34 @@ public class Sistema {
                 System.out.println("Opcão inválida!");
                 
         }
-        return false;
+        return true;
     }
 
     private boolean exibirMenuUsuario() {
-        System.out.println("Voce foi logado e o sistema vai desligar");
-        return false;
+        while (true) {
+            System.out.println("Menu de usuário. Olá, " + usuarioLogado.getNome());
+            System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Deslogar usuario \n4) Desligar sistema");
+            Integer op = scanner.nextInt();
+
+            switch (op) {
+                case 1:
+                    usuarioLogado.postarMensagem();
+                    break;
+                case 2:
+                    //usuarioLogado.verMensagens(); TODO
+                    break;
+                case 3:
+                    usuarioLogado = null;
+                    return true;
+                case 4:
+                    usuarioLogado = null;
+                    return false;
+                default:
+                    System.out.println("Opção inválida!");
+
+            }
+        }
+
     }
 
     private boolean logarUsuario() {
@@ -102,7 +125,10 @@ public class Sistema {
     private boolean logarUsuario(String nome, String senha){
         // Procura pelo usuario:
         for (Map.Entry<Integer, Membro> kvp : membros.entrySet()) {
-            if (Membro.autenticar(kvp.getValue(),nome,senha)){ return true; }
+            if (Membro.autenticar(kvp.getValue(),nome,senha)){
+                usuarioLogado = kvp.getValue();
+                return true;
+            }
         }
         return false;
     }

@@ -71,4 +71,8 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         }
         return false;
     }
+
+    public String getNome() {
+        return this.username;
+    }
 }
