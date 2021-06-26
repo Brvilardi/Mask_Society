@@ -64,4 +64,11 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
                 ", role=" + role +
                 '}';
     }
+
+    public static boolean autenticar(Membro membro, String possivelNome, String possivelSenha){
+        if (membro.username.equals(possivelNome) && membro.senha.equals(possivelSenha)){
+            return true;
+        }
+        return false;
+    }
 }

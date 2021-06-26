@@ -18,6 +18,7 @@ public class Sistema {
     private Scanner scanner = new Scanner(System.in);
     private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
 
+
     /**
      * Construtor da classe Sistema, inicializa os parametros mínimos para funcionamento
      */
@@ -57,7 +58,7 @@ public class Sistema {
     public void run(){
         boolean ligado = true;
         while(ligado){
-            exibirMenu();
+            ligado = exibirMenu();
         }
     }
 
@@ -67,7 +68,12 @@ public class Sistema {
         Integer op = scanner.nextInt();
         switch (op){
             case 1:
-                logarUsuario();
+                System.out.println(membros);
+                if(logarUsuario()){
+                    return exibirMenuUsuario();
+                } else{
+                    System.out.println("Usuário ou senha incorretos");
+                }
                 break;
             case 2:
                 return false;
@@ -78,8 +84,29 @@ public class Sistema {
         return false;
     }
 
-    private void logarUsuario() {
+    private boolean exibirMenuUsuario() {
+        System.out.println("Voce foi logado e o sistema vai desligar");
+        return false;
     }
+
+    private boolean logarUsuario() {
+        // Pede pelo nome de usuario
+        System.out.println("Digite o nome de usuário:");
+        String nome = scanner.next();
+        // Pede a senha
+        System.out.println("Digite a senha:");
+        String senha = scanner.next();
+        return logarUsuario(nome, senha);
+    }
+    
+    private boolean logarUsuario(String nome, String senha){
+        // Procura pelo usuario:
+        for (Map.Entry<Integer, Membro> kvp : membros.entrySet()) {
+            if (Membro.autenticar(kvp.getValue(),nome,senha)){ return true; }
+        }
+        return false;
+    }
+    
 
     /**
      * Método que converte um Map em memória para um arquivo csv
