@@ -10,7 +10,7 @@ public class Main {
         //System.out.println(Membro.apresentacoesRegulares.get(Funcao.HEAVY_LIFTER));
         Sistema sistema = new Sistema(true);
         //System.out.println(sistema.membros);
-        System.out.println(sistema.Map2CSV("asd", sistema.membros));
+        sistema.Map2CSV("asd", sistema.membros);
         System.out.println(sistema.CSV2Map("asd", sistema.membros));
     }
 }

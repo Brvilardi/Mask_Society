@@ -21,20 +21,20 @@ public class Sistema {
      * Construtor da classe Sistema, inicializa os parametros mínimos para funcionamento
      */
     public Sistema() {
-        this.membros = new HashMap<Integer, Membro>();
-        Membro usuario = criarMembro();
-        membros.put(usuario.id, usuario);
-
-        Membro usuario2 = criarMembro();
-        membros.put(usuario2.id, usuario2);
-        System.out.println("content: ");
-        Map2CSV("123", membros);
+//        this.membros = new HashMap<Integer, Membro>();
+//        Membro usuario = criarMembro();
+//        membros.put(usuario.id, usuario);
+//
+//        Membro usuario2 = criarMembro();
+//        membros.put(usuario2.id, usuario2);
+//        System.out.println("content: ");
+//        Map2CSV("123", membros);
     }
 
     public Sistema(boolean op){
         this.membros = new HashMap<Integer, Membro>();
-        Membro usuario = new ScriptGuy("bruno", "1234", Funcao.SCRIPT_GUY);
-        Membro usuario2 = new HeavyLifter("bruno", "1234", Funcao.HEAVY_LIFTER);
+        Membro usuario = criarMembro("bruno", "1234", "3");
+        Membro usuario2 = new HeavyLifter("martin", "1234", Funcao.HEAVY_LIFTER);
         membros.put(usuario.id, usuario);
         membros.put(usuario2.id, usuario2);
 
@@ -88,7 +88,10 @@ public class Sistema {
 
             // Itera pelos elementos do scanner
             while(scanner.hasNext()){
+                // CSV → id;nome;senha;role
                 String linha = scanner.nextLine();
+                String[] dados = linha.split(";");
+
                 System.out.println(linha);
             }
 
@@ -116,19 +119,37 @@ public class Sistema {
         return null;
     }
 
+    private List<String> pedirMembro(){
+        // Criaçao da variável output
+        List<String> output = new ArrayList<>();
 
-    private Membro criarMembro() {
         // Exibicao inicial
         System.out.println("Criação de membro...");
         // Nome do usuario
         System.out.println("Digite o nome de usuário: ");
         String nome = scanner.next();
+        output.add(nome);
         // Senha do usuario
         System.out.println("Digite a senha: ");
         String senha = scanner.next();
+        output.add(senha);
         // Tipo de usuario
         System.out.println("Digite o tipo de usuário: (1 - Mobile Members), (2 - Heavy Lifters), (3 - Script Guys), (4 - Big Brothers)");
         String tipo = scanner.next();
+        output.add(tipo);
+
+        return output;
+
+    }
+
+
+    private Membro criarMembro(){
+        List<String> dados = pedirMembro();
+        return criarMembro(dados.get(0), dados.get(1), dados.get(2));
+    }
+
+    private Membro criarMembro(String nome, String senha, String tipo) {
+
         Funcao funcao = decodificarTipoMembro(tipo);
         if(funcao == null){ return null; }
         // Criar o membro

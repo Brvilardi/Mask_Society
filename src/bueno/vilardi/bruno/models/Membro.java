@@ -52,7 +52,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
     }
 
     public String toCSV(){
-        return Integer.toString(id) + ';' + senha + ';' + username + ';' + role;
+        return Integer.toString(id) + ';' + username + ';' + senha + ';' + role;
     }
 
     @Override
