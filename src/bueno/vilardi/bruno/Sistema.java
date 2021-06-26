@@ -16,6 +16,7 @@ public class Sistema {
     private Integer contadorId = 1;
     public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
     private Scanner scanner = new Scanner(System.in);
+    private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
 
     /**
      * Construtor da classe Sistema, inicializa os parametros mínimos para funcionamento
@@ -24,16 +25,25 @@ public class Sistema {
         // Inicializa o mapa de membros em memória
         this.membros = new HashMap<Integer, Membro>();
 
-        //Abre o arquivo CSV com os dados
-        File tempFile = new File("arquivo_super_Secreto_nao_abrir.csv");
+        // Abre o arquivo CSV com os dados
+        File tempFile = new File(NOME_ARQUIVO_CSV);
         boolean exists = tempFile.exists();
-        System.out.println(exists + "");
+
+        // Caso nao exista o arquivo, inicializar o Sistema com a criacao de um Big Brother
+        if (!exists){
+            System.out.println("Novo sistema, obrigado por escolher Bruno Vilardi como seu programador!");
+            System.out.println("Como esse é um novo sistema, será necessário a criação do primeiro usuário, por favor crie um Big Brother para que você possa criar novos usuários depois\n");
+            criarMembro();
+        }
 
 
-        criarMembro();
 
     }
 
+    /**
+     * Contrutor da classe Sistema com alguns testes - TODO apagar isso
+     * @param op
+     */
     public Sistema(boolean op){
         this.membros = new HashMap<Integer, Membro>();
         criarMembro("bruno", "1234", Funcao.HEAVY_LIFTER);
@@ -60,7 +70,7 @@ public class Sistema {
     public String Map2CSV(String nomeArquivo, Map<Integer, Membro> myMap){
         try {
             // Inicializa o writer
-            FileWriter writer = new FileWriter((nomeArquivo+".csv"));
+            FileWriter writer = new FileWriter(nomeArquivo);
             // Cria uma String com todos os dados
             StringBuilder builder = new StringBuilder();
             for (Integer key : myMap.keySet()) {
@@ -81,7 +91,7 @@ public class Sistema {
     }
 
     public String CSV2Map(String nomeArquivo, Map<Integer, Membro> myMap){
-        File file = new File("asd.csv");
+        File file = new File(nomeArquivo);
 
         //Realiza a leitura
         try {
@@ -170,8 +180,9 @@ public class Sistema {
             default:
                 throw new IllegalStateException("Unexpected value: " + funcao);
         }
-        // Retorna o usuario recém criado
+        // Adiciona o novo membro em memória e salva no arquivo CSV
         this.membros.put(membro.id, membro);
+        Map2CSV(NOME_ARQUIVO_CSV, membros);
 
 
 
