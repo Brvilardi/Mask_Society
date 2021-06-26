@@ -53,13 +53,30 @@ public class Sistema {
     }
 
     public void run(){
-        while(true){
+        boolean ligado = true;
+        while(ligado){
             exibirMenu();
         }
     }
 
-    private void exibirMenu() {
+    private boolean exibirMenu() {
         System.out.println("Menu Inicial:");
+        System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
+        Integer op = scanner.nextInt();
+        switch (op){
+            case 1:
+                logarUsuario();
+                break;
+            case 2:
+                return false;
+            default:
+                System.out.println("Opcão inválida!");
+                
+        }
+        return false;
+    }
+
+    private void logarUsuario() {
     }
 
     /**
@@ -113,7 +130,6 @@ public class Sistema {
         }
         return "";
     }
-
 
     private Funcao decodificarTipoMembro(String tipo){
         System.out.println("tipo: " + tipo);
