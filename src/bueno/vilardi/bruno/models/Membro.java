@@ -5,6 +5,7 @@ import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.interfaces.Apresentacao;
 import bueno.vilardi.bruno.interfaces.PostarMensagem;
 import com.sun.jdi.IntegerType;
+import com.sun.source.tree.CompilationUnitTree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,6 +49,10 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
      */
     public Horario getHorario(){
         return null; //TO_DO pegar horário do sistema
+    }
+
+    public String toCSV(){
+        return Integer.toString(id) + ';' + senha + ';' + username + ';' + role;
     }
 
     @Override
