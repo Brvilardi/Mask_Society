@@ -34,6 +34,8 @@ public class Sistema {
             System.out.println("Novo sistema, obrigado por escolher Bruno Vilardi como seu programador!");
             System.out.println("Como esse é um novo sistema, será necessário a criação do primeiro usuário, por favor crie um Big Brother para que você possa criar novos usuários depois\n");
             criarMembro();
+        } else {
+            CSV2Map(NOME_ARQUIVO_CSV, membros);
         }
 
 
