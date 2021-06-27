@@ -97,7 +97,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
 
         // Cria a mensagem
         String output = "";
-        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + apresentar(sistema.getHorario()) + "\n" + horario;
+        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + assinar(sistema.getHorario()) + "\n" + horario;
         output += "\n" + "-".repeat(40);
 
         // Escreve a mensagem no arquivo

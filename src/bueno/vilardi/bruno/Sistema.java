@@ -57,7 +57,7 @@ public class Sistema {
 
         // Caso nao exista o arquivo, inicializar o Sistema com a criacao de um Big Brother
         if (!exists){
-            System.out.println("Novo sistema, obrigado por escolher Bruno Vilardi como seu programador!");
+            System.out.println("\n\n\nNovo sistema, obrigado por escolher Bruno Vilardi como seu programador!");
             System.out.println("Como esse é um novo sistema, será necessário a criação do primeiro usuário, por favor crie um Big Brother para que você possa criar novos usuários depois\n");
             criarMembro();
         } else {
@@ -88,7 +88,7 @@ public class Sistema {
      * @return true (sistema deve continuar funcionando) ou false (sistema deve para a execução)
      */
     private boolean exibirMenu() {
-        System.out.println("Menu Inicial:");
+        System.out.println("\nMenu Inicial:");
         System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
         System.out.println("Sua opção: ");
         Integer op = scanner.nextInt();
@@ -117,7 +117,7 @@ public class Sistema {
     private boolean exibirMenuUsuario() {
         while (true) {
             // Exibição padrao de membro
-            System.out.println("Menu de usuário. Olá, " + usuarioLogado.getNome());
+            System.out.println("\nMenu de usuário. Olá, " + usuarioLogado.getNome());
             System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Qual é o tipo de horário de trabalho? \n4) Deslogar usuario \n5) Desligar sistema");
             // Exibicao de Big Brother
             if (usuarioLogado.ehBigBrother()){
