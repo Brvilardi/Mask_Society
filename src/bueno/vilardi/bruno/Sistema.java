@@ -128,7 +128,7 @@ public class Sistema {
 
                 case 3:
                     System.out.println("O horário atual é: " + this.horarioSistema);
-
+                    break;
                 case 4:
                     usuarioLogado = null;
                     return true;
@@ -391,5 +391,9 @@ public class Sistema {
     public static String getTimeStamp(){
         String timeStamp = new SimpleDateFormat("(dd/MM/yyyy) - HH:mm:ss").format(new Date());
         return timeStamp;
+    }
+
+    public Horario getHorario() {
+        return horarioSistema;
     }
 }
