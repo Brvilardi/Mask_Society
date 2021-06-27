@@ -30,9 +30,10 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
 
     /**
      * Contrutor da classe Membro
-     * @param username nome do usuario
-     * @param senha senha do usuario
-     * @param role funcao do usuario
+     * @param username nome do usuario (String)
+     * @param senha senha do usuario (String)
+     * @param email email do usuario (String)
+     * @param role funcao do usuario (Enum Funcao)
      */
     public Membro(String username, String senha, String email, Funcao role) {
         this.id = Membro.contadorId;
@@ -44,11 +45,21 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
         Membro.contadorId ++;
     }
 
-
+    /**
+     * Método que retorna os principais dados do usuário em forma de csv
+     * @return
+     */
     public String toCSV(){
         return Integer.toString(id) + ';' + username + ';' + senha + ';' + role + ';' + email;
     }
 
+    /**
+     * Método estático que verifica se um membro possui uma certa senha e nome de usuário
+     * @param membro objeto do tipo Membro (ou filho)
+     * @param possivelNome nome de usuário (String)
+     * @param possivelSenha senha de usuário (String)
+     * @return
+     */
     public static boolean autenticar(Membro membro, String possivelNome, String possivelSenha){
         if (membro.username.equals(possivelNome) && membro.senha.equals(possivelSenha)){
             return true;
@@ -58,12 +69,28 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
 
 
     // Métodos das interfaces
+
+    /**
+     * Método abstrato que retorna a assinatura do membro (varia de acordo com o membro e horário atual do sistema)
+     * @param horario horário atual do sistema
+     * @return assinatura do membro (String)
+     */
     public abstract String assinar(Horario horario);
 
+    /**
+     * Método de apresentação de um membro
+     * @param horario horário atuao do sistema
+     * @return apresentação do membro (String)
+     */
     public String apresentar(Horario horario){
         return "Olá! Meu nome é " + getNome() + ", sou um " + role + "!\n" + assinar(horario) + "\n";
     }
 
+    /**
+     * Método que cria a solitação de postagem de uma mensagem (a postagem em si ocorre dentro do sistema)
+     * @param mensagem corpo da mensagem que será postada (String)
+     * @param sistema sistema que está sendo utilizado
+     */
     public void postarMensagem(String mensagem, Sistema sistema){
         // Pega o horário atual
         String horario = Sistema.getTimeStamp();
@@ -77,26 +104,32 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
         sistema.enviarMensagem(output);
     }
 
+    /**
+     * Método que verifica se um membro é um Big Brother
+     * @return true (se o membro for Big Brother) ou false (se o membro não for Big Brother)
+     */
     public boolean ehBigBrother(){
         return role.equals(Funcao.BIG_BROTHER);
     }
 
-
+    /**
+     * Método que retorna o nome do membro
+     * @return nome do membro (String)
+     */
     public String getNome() {
         return this.username;
     }
 
-    public String getApresentacaoPadrao(){
-        return "Olá! Meu nome é " + username + " e eu sou um " + role.toString();
-    }
-
+    /**
+     * Método de toString do Membro
+     * @return Alguns atributos imporantes do membro (String)
+     */
     @Override
     public String toString() {
-        return "Membro{" +
+        return "role{" +
                 "id=" + id +
-                ", senha='" + senha + '\'' +
                 ", username='" + username + '\'' +
-                ", role=" + role +
+                ", email='" + email +
                 '}';
     }
 

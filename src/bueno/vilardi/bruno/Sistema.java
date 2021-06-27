@@ -20,8 +20,7 @@ public class Sistema {
     private Scanner scanner;
     private FileWriter fw;
     private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
-
-
+    private String NOME_ARQUIVO_MENSAGENS = "mensagens.txt";
 
 
     /**
@@ -283,13 +282,14 @@ public class Sistema {
 
     /**
      * Método que exibe todas as mensagens enviadas e armazenadas no sitema
+     * O arquivo em que as mensagens são armazenadas/lidas é a variável de sistema NOME_ARQUIVO_MENSAGENS
      */
     private void exibirMensagens() {
         try {
             fw.flush();
             System.out.println("=".repeat(40));
             System.out.println("Mensagens:");
-            File fr = new File("mensagens.txt");
+            File fr = new File(NOME_ARQUIVO_MENSAGENS);
             Scanner myReader = new Scanner(fr);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -304,6 +304,10 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método que solicita um nome de usuário e senha e verifica se essas credenciais estão cadastradas no sistema
+     * @return true (usuário e senha batem) ou false (usuario ou senha não batem)
+     */
     private boolean logarUsuario() {
         // Pede pelo nome de usuario
         System.out.println("Digite o nome de usuário:");
@@ -313,7 +317,13 @@ public class Sistema {
         String senha = scanner.next();
         return logarUsuario(nome, senha);
     }
-    
+
+    /**
+     * Método que recebe um nome de usuário e uma senha e verifica se essas credenciais estão cadastradas no sistema
+     * @param nome nome de usuário (String)
+     * @param senha senha do usuário (String)
+     * @return true (usuário e senha batem) ou false (usuario ou senha não batem)
+     */
     private boolean logarUsuario(String nome, String senha){
         // Procura pelo usuario:
         for (Map.Entry<Integer, Membro> kvp : membros.entrySet()) {
@@ -326,7 +336,7 @@ public class Sistema {
     }
 
     /**
-     * Método que converte um Map em memória para um arquivo csv
+     * Método que converte um Map em memória em CSV e salva em um arquivo csv especificado
      * @param nomeArquivo nome do arquivo csv destino
      * @param myMap mapa Map<Integer, Membro> origem
      */
@@ -353,7 +363,12 @@ public class Sistema {
         return "";
     }
 
-    public String CSV2Map(String nomeArquivo, Map<Integer, Membro> myMap){
+    /**
+     * Método Método que converte um arquivo csv em HashMap de membros em memória
+     * @param nomeArquivo nome do arquivo csv
+     * @param myMap endereço do mapa a ser salvo
+     */
+    public void CSV2Map(String nomeArquivo, Map<Integer, Membro> myMap){
         File file = new File(nomeArquivo);
 
         //Realiza a leitura
@@ -374,9 +389,17 @@ public class Sistema {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "";
     }
 
+    /**
+     *  Método que recebe um valor numérico e converte em Funcao, seguindo a regra:
+     *  1 = Mobile_Member
+     *  2 = HEAVY_LIFTER
+     *  3 = SCRIPT_GUY
+     *  4 = BIG_BROTHER
+     * @param tipo tipo de membro (valor inteiro)
+     * @return o tipo de membro com o Enum Funcao
+     */
     private Funcao decodificarTipoMembro(String tipo){
         System.out.println("tipo: " + tipo);
         switch (tipo){
@@ -393,6 +416,11 @@ public class Sistema {
         return null;
     }
 
+    /**
+     * Método que envia uma String como mensagem (envia via usuário logado)
+     * A mensagem é salva no arquivo específicado no atributo fw (FileWritter)
+     * @param string
+     */
     public void enviarMensagem(String string) {
         try {
             this.fw.write(string);
@@ -401,6 +429,10 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método que faz a solicitação de informações necessárias para criação de um membro
+     * @return array de Strings com as informações: nomeDeUsuário, senha, tipo e email (respectivamente)
+     */
     private List<String> pedirMembro(){
         // Criaçao da variável output
         List<String> output = new ArrayList<>();
@@ -428,11 +460,22 @@ public class Sistema {
 
     }
 
+    /**
+     * Método que solicita ao usuário as informações necessárias e cria o membro
+     */
     private void criarMembro(){
         List<String> dados = pedirMembro();
         criarMembro(dados.get(0), dados.get(1), decodificarTipoMembro(dados.get(2)), dados.get(3));
     }
 
+    /**
+     * Método que cria um membro a partir dos dados informados e salva em memória e no arquivo CSV
+     * É utilizado o construtor específico de cada tipo de Membro (MobileMember, HeavyLifter, ScriptGuy e Big Brother)
+     * @param nome nome de usuário (String)
+     * @param senha senha do usuário (String)
+     * @param funcao tipo de membro (Enum Funcao)
+     * @param email email do usuário (String)
+     */
     private void criarMembro(String nome, String senha, Funcao funcao, String email) {
         // Criar o membro
         Membro membro;
@@ -457,11 +500,19 @@ public class Sistema {
         Map2CSV(NOME_ARQUIVO_CSV, membros);
     }
 
+    /**
+     * Método estático que cria uma marca do tempo atual
+     * @return horário atual no formato de "(dia/mês/ano) - hora:minuto:segundo" (String)
+     */
     public static String getTimeStamp(){
         String timeStamp = new SimpleDateFormat("(dd/MM/yyyy) - HH:mm:ss").format(new Date());
         return timeStamp;
     }
 
+    /**
+     *  Método que retorna o horário atual do sistema
+     * @return
+     */
     public Horario getHorario() {
         return horarioSistema;
     }
