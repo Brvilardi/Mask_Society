@@ -57,7 +57,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
     // Métodos das interfaces
     public abstract String apresentar(Horario horario);
 
-    public void postarMensagem(String mensagem, FileWriter fw){ //TODO colocar no sistema
+    public void postarMensagem(String mensagem, Sistema sistema){ //TODO colocar no sistema
         // Pega o horário atual
         String horario = Sistema.getTimeStamp();
 
@@ -67,11 +67,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         output += "\n" + "-".repeat(40);
 
         // Escreve a mensagem no arquivo
-        try {
-            fw.write(output);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sistema.enviarMensagem(output);
     }
 
 

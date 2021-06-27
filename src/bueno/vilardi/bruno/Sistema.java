@@ -120,7 +120,7 @@ public class Sistema {
             switch (op) { //return → sai do menu usuario (com true ele volta para o menu inicial e com false desliga sistema) e break continua no menu usario
                 case 1:
                     System.out.println("Digite sua mensagem: ");
-                    usuarioLogado.postarMensagem(scanner.next(), fw);
+                    usuarioLogado.postarMensagem(scanner.next(), this);
                     break;
                 case 2:
                     exibirMensagens();
@@ -326,6 +326,14 @@ public class Sistema {
         }
 
         return null;
+    }
+
+    public void enviarMensagem(String string) {
+        try {
+            this.fw.write(string);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private List<String> pedirMembro(){
