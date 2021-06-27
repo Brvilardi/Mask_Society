@@ -110,6 +110,11 @@ public class Sistema {
         return true;
     }
 
+    /**
+     * Método que exibe o menu específico para ações de usuário (Mandar mensagem, Ver as mensagens enviadas, Perguntar o horário de trabalho (Regular ou Extra), Deslogar e Desligar o sistema
+     * Exibirá opções adicionais para Big Brothers (Criar novo membro, excluir um membro existente, trocar o horário de trabalho (de regular para extra ou de extra para regular) e gerar relatório
+     * @return true (deslogar usuário e voltar para o menu inicial) ou false (deslogar usuário e desligar o sistema)
+     */
     private boolean exibirMenuUsuario() {
         while (true) {
             // Exibição padrao de membro
@@ -204,6 +209,11 @@ public class Sistema {
 
     }
 
+    /**
+     * Método que exibe um relatório contendo as informações de todos os membros cadastrados no sistema
+     * Após a exibição, o método possibilita pedir para que algum membro se apresente
+     * EXCLUSIVO PARA BIG BROTHER
+     */
     private void exibirRelatorio() {
         System.out.println("=".repeat(50));
         System.out.println("Relatório de membros: \n");
@@ -228,6 +238,10 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método que solicita um nome de membro para o usuário e exclui esse membro
+     * EXCLUSIVO PARA BIG BROTHER
+     */
     private void excluirMembro() {
         System.out.println("Digite o nome do membro que deseja excluir:");
         String nome = scanner.next();
@@ -242,6 +256,10 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método que exclui o membro cujo Id é especificado
+     * @param id Número do Id do membro a ser excluido (valor inteiro)
+     */
     private void excluirMembro(Integer id) {
         System.out.println("Id a ser removido: " + id);
         System.out.println("membro q vai vazar: " + membros.get(id));
@@ -249,6 +267,11 @@ public class Sistema {
         Map2CSV(NOME_ARQUIVO_CSV, membros);
     }
 
+    /**
+     * Método que busca um membro salvo em memória do sistema
+     * @param nome nome do membro a ser buscado
+     * @return Objeto membro cujo nome é igual ao especificado
+     */
     private Membro getMembro(String nome) {
         for (Integer key : membros.keySet()) {
             if (membros.get(key).getNome().equals(nome)){
@@ -258,6 +281,9 @@ public class Sistema {
         return null;
     }
 
+    /**
+     * Método que exibe todas as mensagens enviadas e armazenadas no sitema
+     */
     private void exibirMensagens() {
         try {
             fw.flush();
