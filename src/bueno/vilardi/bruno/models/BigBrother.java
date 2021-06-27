@@ -11,14 +11,13 @@ public class BigBrother extends Membro{
         super(username, senha, role);
     }
 
-
     @Override
-    public String apresentar() {
-        return null;
+    public void apresentar() {
+        System.out.println(getApresentacao());
     }
 
     @Override
-    public String postarMensagem() {
-        return null;
+    public void postarMensagem() {
+
     }
 }

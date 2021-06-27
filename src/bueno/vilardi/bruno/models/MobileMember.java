@@ -12,12 +12,12 @@ public class MobileMember extends Membro{
     }
 
     @Override
-    public String apresentar() {
-        return null;
+    public void apresentar() {
+        System.out.println(getApresentacao());
     }
 
     @Override
-    public String postarMensagem() {
-        return null;
+    public void postarMensagem() {
+
     }
 }
