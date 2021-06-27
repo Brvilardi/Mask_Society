@@ -1,7 +1,9 @@
 package bueno.vilardi.bruno;
+/*
+Nome: Bruno Vilardi Bueno
+RA: 19.00331-5
 
-import bueno.vilardi.bruno.enums.Funcao;
-import bueno.vilardi.bruno.models.Membro;
+ */
 
 public class Main {
 
