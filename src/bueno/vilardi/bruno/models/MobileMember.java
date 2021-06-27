@@ -13,7 +13,7 @@ public class MobileMember extends Membro{
     }
 
     @Override
-    public String apresentar(Horario horario) {
+    public String assinar(Horario horario) {
         switch (horario){
             case REGULAR:
                 return assinaturaRegular;

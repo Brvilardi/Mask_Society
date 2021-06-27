@@ -4,6 +4,7 @@ import bueno.vilardi.bruno.Sistema;
 import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.interfaces.Apresentacao;
+import bueno.vilardi.bruno.interfaces.Assinatura;
 import bueno.vilardi.bruno.interfaces.PostarMensagem;
 
 import java.io.FileWriter;
@@ -13,11 +14,12 @@ import java.io.IOException;
 /**
  * Classe Membro, que representa o básico de qualquer membro
  */
-public abstract class Membro implements Apresentacao, PostarMensagem {
+public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura {
     // Atributos gerais de qualquer Membro
     public Integer id;
     protected String senha;
     protected String username;
+    protected String email;
     public Funcao role;
     protected String assinaturaRegular;
     protected String assinaturaExtra;
@@ -32,10 +34,11 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
      * @param senha senha do usuario
      * @param role funcao do usuario
      */
-    public Membro(String username, String senha, Funcao role) {
+    public Membro(String username, String senha, String email, Funcao role) {
         this.id = Membro.contadorId;
         this.senha = senha;
         this.username = username;
+        this.email = email;
         this.role = role;
 
         Membro.contadorId ++;
@@ -55,7 +58,11 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
 
 
     // Métodos das interfaces
-    public abstract String apresentar(Horario horario);
+    public abstract String assinar(Horario horario);
+
+    public String apresentar(Horario horario){
+        return "Olá! Meu nome é " + getNome() + ", sou um " + role + "!\n" + assinar(horario) + "\n";
+    }
 
     public void postarMensagem(String mensagem, Sistema sistema){
         // Pega o horário atual

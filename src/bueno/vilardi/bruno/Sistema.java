@@ -111,7 +111,7 @@ public class Sistema {
             System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Qual é o tipo de horário de trabalho? \n4) Deslogar usuario \n5) Desligar sistema");
             // Exibicao de Big Brother
             if (usuarioLogado.ehBigBrother()){
-                System.out.println("\nExclusivos de Big Brother: \n6) Criar membro \n7) Excluir membro \n8) Trocar o horário");
+                System.out.println("\nExclusivos de Big Brother: \n6) Criar membro \n7) Excluir membro \n8) Trocar o horário \n9) Gerar relatório");
             }
             System.out.println("Sua opção: ");
 
@@ -179,6 +179,15 @@ public class Sistema {
                         System.out.println("Opção inválida!");
                         break;
                     }
+                case 9:
+                    if (usuarioLogado.ehBigBrother()){
+                        exibirRelatorio();
+                        break;
+                    } else{
+                        System.out.println("Opção inválida!");
+                        break;
+                    }
+
 
                 default:
                     System.out.println("Opção inválida!");
@@ -188,6 +197,31 @@ public class Sistema {
         }
 
     }
+
+    private void exibirRelatorio() {
+        System.out.println("=".repeat(50));
+        System.out.println("Relatório de membros: \n");
+        for (Integer key : membros.keySet()) {
+            System.out.println(membros.get(key));
+        }
+        System.out.println("=".repeat(50) + "\n");
+        System.out.println("Se deseja que alguém se apresente, digite o número do id desse membro. Caso contrário digite 0");
+
+        Integer membroId = -1;
+        while(true) {
+            System.out.println("Id desejado (ou 0 para sair): ");
+            membroId = scanner.nextInt();
+            if (membroId == 0) {
+                break;
+            }
+            if (membros.containsKey(membroId)) {
+                System.out.println(membros.get(membroId).apresentar(horarioSistema));
+            } else {
+                System.out.println("Esse membro não existe!");
+            }
+        }
+    }
+
 
     private void excluirMembro() {
         System.out.println("Digite o nome do membro que deseja excluir:");
@@ -354,6 +388,10 @@ public class Sistema {
         System.out.println("Digite o tipo de usuário: (1 - Mobile Members), (2 - Heavy Lifters), (3 - Script Guys), (4 - Big Brothers)");
         String tipo = scanner.next();
         output.add(tipo);
+        // Email do usuario
+        System.out.println("Digite o email de usuário: ");
+        String email = scanner.next();
+        output.add(email);
 
         return output;
 
