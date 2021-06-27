@@ -13,7 +13,7 @@ public class MobileMember extends Membro{
 
     @Override
     public void apresentar() {
-        System.out.println(getApresentacao());
+        System.out.println(getApresentacaoPadrao());
     }
 
     @Override

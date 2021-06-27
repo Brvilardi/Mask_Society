@@ -1,9 +1,13 @@
 package bueno.vilardi.bruno.models;
 
+import bueno.vilardi.bruno.Sistema;
 import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.interfaces.Apresentacao;
 import bueno.vilardi.bruno.interfaces.PostarMensagem;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 /**
@@ -49,6 +53,24 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         return false;
     }
 
+    public void postarMensagemPadrao(String mensagem, FileWriter fw){
+        // Pega o horário atual
+        String horario = Sistema.getTimeStamp();
+
+        // Cria a mensagem
+        String output = "";
+        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + getAssinatura() + "\n" + horario;
+        output += "\n" + "-".repeat(40);
+
+        // Escreve a mensagem no arquivo
+        try {
+            fw.write(output);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public String getAssinatura(){
         switch (getHorario()){
@@ -57,7 +79,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
             case EXTRA:
                 return assinaturaExtra;
         }
-        return null;
+        return assinaturaRegular; //TODO consertar o switch
     }
 
     public String getNome() {
@@ -69,10 +91,10 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
      * @return Horário atual do sistema
      */
     public Horario getHorario(){
-        return null; //TO_DO pegar horário do sistema
+        return Horario.REGULAR; //TO_DO pegar horário do sistema
     }
 
-    public String getApresentacao(){
+    public String getApresentacaoPadrao(){
         return "Olá! Meu nome é " + username + " e eu sou um " + role.toString();
     }
 

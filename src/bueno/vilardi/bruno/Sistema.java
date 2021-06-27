@@ -7,6 +7,7 @@ import bueno.vilardi.bruno.models.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -15,9 +16,11 @@ public class Sistema {
     public Map<Integer, Membro> membros;
     private Integer contadorId = 1;
     public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
+    private FileWriter fw;
     private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
     private Membro usuarioLogado;
+
 
 
     /**
@@ -27,9 +30,27 @@ public class Sistema {
         // Inicializa o mapa de membros em memória
         this.membros = new HashMap<Integer, Membro>();
 
+        // Inicializa o scanner (delimitado por return)
+        scanner = new Scanner(System.in).useDelimiter("\n");
+
+        // Inicializa o FileWriter
+        File tempFile = new File("mensagens.txt");
+        try {
+            // Caso o arquivo não exista, cria um novo
+            if (!tempFile.exists()) {
+                tempFile.createNewFile();
+            }
+            // Salva o FileWriter como atributo do sistema
+            fw = new FileWriter(tempFile, true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
         // Abre o arquivo CSV com os dados
-        File tempFile = new File(NOME_ARQUIVO_CSV);
-        boolean exists = tempFile.exists();
+        File tempFile2 = new File(NOME_ARQUIVO_CSV);
+        boolean exists = tempFile2.exists();
 
         // Caso nao exista o arquivo, inicializar o Sistema com a criacao de um Big Brother
         if (!exists){
@@ -60,6 +81,11 @@ public class Sistema {
         boolean ligado = true;
         while(ligado){
             ligado = exibirMenu();
+        }
+        try {
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -93,7 +119,8 @@ public class Sistema {
 
             switch (op) {
                 case 1:
-                    usuarioLogado.postarMensagem();
+                    System.out.println("Digite sua mensagem: ");
+                    usuarioLogado.postarMensagemPadrao(scanner.next(), fw);
                     break;
                 case 2:
                     //usuarioLogado.verMensagens(); TODO
@@ -225,7 +252,6 @@ public class Sistema {
 
     }
 
-
     private void criarMembro(){
         List<String> dados = pedirMembro();
         criarMembro(dados.get(0), dados.get(1), decodificarTipoMembro(dados.get(2)));
@@ -257,5 +283,10 @@ public class Sistema {
 
 
 
+    }
+
+    public static String getTimeStamp(){
+        String timeStamp = new SimpleDateFormat("(dd/MM/yyyy) - HH:mm:ss").format(new Date());
+        return timeStamp;
     }
 }
