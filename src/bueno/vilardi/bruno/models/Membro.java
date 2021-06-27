@@ -71,6 +71,9 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
 
     }
 
+    public boolean ehBigBrother(){
+        return role.equals(Funcao.BIG_BROTHER);
+    }
 
     public String getAssinatura(){
         switch (getHorario()){

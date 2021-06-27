@@ -111,11 +111,17 @@ public class Sistema {
 
     private boolean exibirMenuUsuario() {
         while (true) {
+            // Exibição padrao de membro
             System.out.println("Menu de usuário. Olá, " + usuarioLogado.getNome());
             System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Deslogar usuario \n4) Desligar sistema");
+            // Exibicao de Big Brother
+            if (usuarioLogado.ehBigBrother()){
+                System.out.println("\nExclusivos de Big Brother: \n5) Criar membro \n6) Excluir membro");
+            }
+
             Integer op = scanner.nextInt();
 
-            switch (op) {
+            switch (op) { //return → sai do menu usuario (com true ele volta para o menu inicial e com false desliga sistema) e break continua no menu usario
                 case 1:
                     System.out.println("Digite sua mensagem: ");
                     usuarioLogado.postarMensagemPadrao(scanner.next(), fw);
@@ -129,8 +135,26 @@ public class Sistema {
                 case 4:
                     usuarioLogado = null;
                     return false;
+                case 5:
+                    if (usuarioLogado.ehBigBrother()){
+                        criarMembro();
+                        break;
+                    } else{
+                        System.out.println("Opção inválida!");
+                        break;
+                    }
+                case 6:
+                    if (usuarioLogado.ehBigBrother()){
+                        //excluirMembro();
+                        break;
+                    } else{
+                        System.out.println("Opção inválida!");
+                        break;
+                    }
+
                 default:
                     System.out.println("Opção inválida!");
+                    break;
 
             }
         }
