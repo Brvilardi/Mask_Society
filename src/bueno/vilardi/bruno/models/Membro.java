@@ -53,7 +53,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         return false;
     }
 
-    public void postarMensagemPadrao(String mensagem, FileWriter fw){
+    public void postarMensagemPadrao(String mensagem, FileWriter fw){ //TODO colocar no sistema
         // Pega o horário atual
         String horario = Sistema.getTimeStamp();
 

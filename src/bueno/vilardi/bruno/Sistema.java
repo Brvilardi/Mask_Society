@@ -4,9 +4,7 @@ import bueno.vilardi.bruno.enums.Funcao;
 import bueno.vilardi.bruno.models.*;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -123,7 +121,7 @@ public class Sistema {
                     usuarioLogado.postarMensagemPadrao(scanner.next(), fw);
                     break;
                 case 2:
-                    //usuarioLogado.verMensagens(); TODO
+                    exibirMensagens();
                     break;
                 case 3:
                     usuarioLogado = null;
@@ -137,6 +135,25 @@ public class Sistema {
             }
         }
 
+    }
+
+    private void exibirMensagens() {
+        try {
+            fw.flush();
+            System.out.println("Mensagens:");
+            File fr = new File("mensagens.txt");
+            Scanner myReader = new Scanner(fr);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+            }
+            myReader.close();
+            System.out.println("\n\n");
+        } catch (FileNotFoundException e) {
+            System.out.println("\nAlgo de errado aconteceu!\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean logarUsuario() {
