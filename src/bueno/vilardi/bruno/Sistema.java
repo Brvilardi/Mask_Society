@@ -84,7 +84,6 @@ public class Sistema {
 
     private boolean exibirMenu() {
         System.out.println("Menu Inicial:");
-        System.out.println("O horário atual é: " + this.horarioSistema);
         System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
         System.out.println("Sua opção: ");
         Integer op = scanner.nextInt();
@@ -109,11 +108,10 @@ public class Sistema {
         while (true) {
             // Exibição padrao de membro
             System.out.println("Menu de usuário. Olá, " + usuarioLogado.getNome());
-            System.out.println("O horário atual é: " + this.horarioSistema);
-            System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Deslogar usuario \n4) Desligar sistema");
+            System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Qual é o tipo de horário de trabalho? \n4) Deslogar usuario \n5) Desligar sistema");
             // Exibicao de Big Brother
             if (usuarioLogado.ehBigBrother()){
-                System.out.println("\nExclusivos de Big Brother: \n5) Criar membro \n6) Excluir membro \n7) Trocar o horário");
+                System.out.println("\nExclusivos de Big Brother: \n6) Criar membro \n7) Excluir membro \n8) Trocar o horário");
             }
             System.out.println("Sua opção: ");
 
@@ -127,13 +125,17 @@ public class Sistema {
                 case 2:
                     exibirMensagens();
                     break;
+
                 case 3:
-                    usuarioLogado = null;
-                    return true;
+                    System.out.println("O horário atual é: " + this.horarioSistema);
+
                 case 4:
                     usuarioLogado = null;
-                    return false;
+                    return true;
                 case 5:
+                    usuarioLogado = null;
+                    return false;
+                case 6:
                     if (usuarioLogado.ehBigBrother()){
                         criarMembro();
                         break;
@@ -141,7 +143,7 @@ public class Sistema {
                         System.out.println("Opção inválida!");
                         break;
                     }
-                case 6:
+                case 7:
                     if (usuarioLogado.ehBigBrother()){
                         excluirMembro();
                         break;
@@ -149,7 +151,7 @@ public class Sistema {
                         System.out.println("Opção inválida!");
                         break;
                     }
-                case 7:
+                case 8:
                     if (usuarioLogado.ehBigBrother()){
                         System.out.print("Tem certeza que deseja trocar o horário do sistema de ");
                         switch (horarioSistema){
