@@ -7,9 +7,6 @@ import bueno.vilardi.bruno.interfaces.Apresentacao;
 import bueno.vilardi.bruno.interfaces.Assinatura;
 import bueno.vilardi.bruno.interfaces.PostarMensagem;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 
 /**
  * Classe Membro, que representa o básico de qualquer membro
@@ -47,7 +44,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
 
     /**
      * Método que retorna os principais dados do usuário em forma de csv
-     * @return
+     * @return os valores separados por ';' (String)
      */
     public String toCSV(){
         return Integer.toString(id) + ';' + username + ';' + senha + ';' + role + ';' + email;
@@ -58,13 +55,10 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
      * @param membro objeto do tipo Membro (ou filho)
      * @param possivelNome nome de usuário (String)
      * @param possivelSenha senha de usuário (String)
-     * @return
+     * @return true (membro possui o nome e senha especificado) ou false (membro não possui o nome e senha especificado)
      */
     public static boolean autenticar(Membro membro, String possivelNome, String possivelSenha){
-        if (membro.username.equals(possivelNome) && membro.senha.equals(possivelSenha)){
-            return true;
-        }
-        return false;
+        return membro.username.equals(possivelNome) && membro.senha.equals(possivelSenha);
     }
 
 
@@ -96,8 +90,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
         String horario = Sistema.getTimeStamp();
 
         // Cria a mensagem
-        String output = "";
-        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + assinar(sistema.getHorario()) + "\n" + horario;
+        String output = "\n@" + getNome() + ":\n" + mensagem + "\n" + assinar(sistema.getHorario()) + "\n" + horario;
         output += "\n" + "-".repeat(40);
 
         // Escreve a mensagem no arquivo

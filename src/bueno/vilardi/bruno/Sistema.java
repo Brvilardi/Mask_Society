@@ -15,12 +15,11 @@ public class Sistema {
     public Map<Integer, Membro> membros;
     private Membro usuarioLogado;
     private Horario horarioSistema;
-    private Integer contadorId = 1;
-    public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
-    private Scanner scanner;
+    public final Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
+    private final Scanner scanner;
     private FileWriter fw;
-    private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
-    private String NOME_ARQUIVO_MENSAGENS = "mensagens.txt";
+    private final String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
+    private final String NOME_ARQUIVO_MENSAGENS = "mensagens.txt";
 
 
     /**
@@ -28,7 +27,7 @@ public class Sistema {
      */
     public Sistema() {
         // Inicializa o mapa de membros em memória
-        this.membros = new HashMap<Integer, Membro>();
+        this.membros = new HashMap<>();
 
         // Inicializa o scanner (delimitado por return)
         scanner = new Scanner(System.in).useDelimiter("\n");
@@ -61,7 +60,7 @@ public class Sistema {
             System.out.println("Como esse é um novo sistema, será necessário a criação do primeiro usuário, por favor crie um Big Brother para que você possa criar novos usuários depois\n");
             criarMembro();
         } else {
-            CSV2Map(NOME_ARQUIVO_CSV, membros);
+            CSV2Map(NOME_ARQUIVO_CSV);
         }
 
 
@@ -91,7 +90,7 @@ public class Sistema {
         System.out.println("\nMenu Inicial:");
         System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
         System.out.println("Sua opção: ");
-        Integer op = scanner.nextInt();
+        int op = scanner.nextInt();
         switch (op){
             case 1:
                 if(logarUsuario()){
@@ -125,7 +124,7 @@ public class Sistema {
             }
             System.out.println("Sua opção: ");
 
-            Integer op = scanner.nextInt();
+            int op = scanner.nextInt();
 
             switch (op) { //return → sai do menu usuario (com true ele volta para o menu inicial e com false desliga sistema) e break continua no menu usario
                 case 1:
@@ -148,19 +147,17 @@ public class Sistema {
                 case 6:
                     if (usuarioLogado.ehBigBrother()){
                         criarMembro();
-                        break;
                     } else{
                         System.out.println("Opção inválida!");
-                        break;
                     }
+                    break;
                 case 7:
                     if (usuarioLogado.ehBigBrother()){
                         excluirMembro();
-                        break;
                     } else{
                         System.out.println("Opção inválida!");
-                        break;
                     }
+                    break;
                 case 8:
                     if (usuarioLogado.ehBigBrother()){
                         System.out.print("Tem certeza que deseja trocar o horário do sistema de ");
@@ -184,19 +181,17 @@ public class Sistema {
                             }
 
                         }
-                        break;
                     } else{
                         System.out.println("Opção inválida!");
-                        break;
                     }
+                    break;
                 case 9:
                     if (usuarioLogado.ehBigBrother()){
                         exibirRelatorio();
-                        break;
                     } else{
                         System.out.println("Opção inválida!");
-                        break;
                     }
+                    break;
 
 
                 default:
@@ -222,7 +217,7 @@ public class Sistema {
         System.out.println("=".repeat(50) + "\n");
         System.out.println("Se deseja que alguém se apresente, digite o número do id desse membro. Caso contrário digite 0");
 
-        Integer membroId = -1;
+        int membroId;
         while(true) {
             System.out.println("Id desejado (ou 0 para sair): ");
             membroId = scanner.nextInt();
@@ -340,7 +335,7 @@ public class Sistema {
      * @param nomeArquivo nome do arquivo csv destino
      * @param myMap mapa Map<Integer, Membro> origem
      */
-    public String Map2CSV(String nomeArquivo, Map<Integer, Membro> myMap){
+    public void Map2CSV(String nomeArquivo, Map<Integer, Membro> myMap){
         try {
             // Inicializa o writer
             FileWriter writer = new FileWriter(nomeArquivo);
@@ -355,20 +350,16 @@ public class Sistema {
             writer.write(content);
             writer.close();
 
-
-            return content;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
     }
 
     /**
-     * Método Método que converte um arquivo csv em HashMap de membros em memória
+     * Método Método que converte um arquivo csv em HashMap de membros em memória (usando o método criarMembro)
      * @param nomeArquivo nome do arquivo csv
-     * @param myMap endereço do mapa a ser salvo
      */
-    public void CSV2Map(String nomeArquivo, Map<Integer, Membro> myMap){
+    public void CSV2Map(String nomeArquivo){
         File file = new File(nomeArquivo);
 
         //Realiza a leitura
@@ -411,15 +402,15 @@ public class Sistema {
                 return Funcao.SCRIPT_GUY;
             case "4":
                 return Funcao.BIG_BROTHER;
+            default:
+                return null;
         }
-
-        return null;
     }
 
     /**
      * Método que envia uma String como mensagem (envia via usuário logado)
      * A mensagem é salva no arquivo específicado no atributo fw (FileWritter)
-     * @param string
+     * @param string mensagema  ser enviada
      */
     public void enviarMensagem(String string) {
         try {
@@ -505,13 +496,12 @@ public class Sistema {
      * @return horário atual no formato de "(dia/mês/ano) - hora:minuto:segundo" (String)
      */
     public static String getTimeStamp(){
-        String timeStamp = new SimpleDateFormat("(dd/MM/yyyy) - HH:mm:ss").format(new Date());
-        return timeStamp;
+        return new SimpleDateFormat("(dd/MM/yyyy) - HH:mm:ss").format(new Date());
     }
 
     /**
      *  Método que retorna o horário atual do sistema
-     * @return
+     * @return horário atual do sistema (REGULAR ou EXTRA)
      */
     public Horario getHorario() {
         return horarioSistema;
