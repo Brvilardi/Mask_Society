@@ -145,7 +145,7 @@ public class Sistema {
                     }
                 case 6:
                     if (usuarioLogado.ehBigBrother()){
-                        //excluirMembro();
+                        excluirMembro();
                         break;
                     } else{
                         System.out.println("Opção inválida!");
@@ -159,6 +159,37 @@ public class Sistema {
             }
         }
 
+    }
+
+    private void excluirMembro() {
+        System.out.println("Digite o nome do membro que deseja excluir:");
+        String nome = scanner.next();
+        Membro membro = getMembro(nome);
+        if ( membro != null){
+            System.out.println("Tem certeza que deseja excluir o " + membro.role + ", com nome " + membro.getNome() + "(id= " + membro.id + ")? \n(y/n)");
+            if (scanner.next().equals("y")){
+                excluirMembro(membro.id);
+            }
+        } else {
+            System.out.println("membro " + nome + " não encontrado!");
+        }
+    }
+
+    private void excluirMembro(Integer id) {
+        System.out.println("Id a ser removido: " + id);
+        System.out.println("membro q vai vazar: " + membros.get(id));
+        membros.remove(id);
+        Map2CSV(NOME_ARQUIVO_CSV, membros);
+    }
+
+
+    private Membro getMembro(String nome) {
+        for (Integer key : membros.keySet()) {
+            if (membros.get(key).getNome().equals(nome)){
+                return membros.get(key);
+            }
+        }
+        return null;
     }
 
     private void exibirMensagens() {
@@ -200,7 +231,6 @@ public class Sistema {
         }
         return false;
     }
-    
 
     /**
      * Método que converte um Map em memória para um arquivo csv
@@ -299,7 +329,6 @@ public class Sistema {
     }
 
     private void criarMembro(String nome, String senha, Funcao funcao) {
-
         // Criar o membro
         Membro membro;
         switch(funcao) {
@@ -321,9 +350,6 @@ public class Sistema {
         // Adiciona o novo membro em memória e salva no arquivo CSV
         this.membros.put(membro.id, membro);
         Map2CSV(NOME_ARQUIVO_CSV, membros);
-
-
-
     }
 
     public static String getTimeStamp(){

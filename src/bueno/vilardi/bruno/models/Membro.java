@@ -18,7 +18,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
     public Integer id;
     protected String senha;
     protected String username;
-    protected Funcao role;
+    public Funcao role;
     protected String assinaturaRegular;
     protected String assinaturaExtra;
 
