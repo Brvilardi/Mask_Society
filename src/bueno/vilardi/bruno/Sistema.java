@@ -69,7 +69,9 @@ public class Sistema {
 
     }
 
-
+    /**
+     * Método de início do sistema, faz com que o sistema seja executado
+     */
     public void run(){
         boolean ligado = true;
         while(ligado){
@@ -82,6 +84,10 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método que exibe o menu inicial do sistema (sem usuário logado)
+     * @return true (sistema deve continuar funcionando) ou false (sistema deve para a execução)
+     */
     private boolean exibirMenu() {
         System.out.println("Menu Inicial:");
         System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
@@ -222,7 +228,6 @@ public class Sistema {
         }
     }
 
-
     private void excluirMembro() {
         System.out.println("Digite o nome do membro que deseja excluir:");
         String nome = scanner.next();
@@ -244,7 +249,6 @@ public class Sistema {
         Map2CSV(NOME_ARQUIVO_CSV, membros);
     }
 
-
     private Membro getMembro(String nome) {
         for (Integer key : membros.keySet()) {
             if (membros.get(key).getNome().equals(nome)){
@@ -257,6 +261,7 @@ public class Sistema {
     private void exibirMensagens() {
         try {
             fw.flush();
+            System.out.println("=".repeat(40));
             System.out.println("Mensagens:");
             File fr = new File("mensagens.txt");
             Scanner myReader = new Scanner(fr);
@@ -265,7 +270,7 @@ public class Sistema {
                 System.out.println(data);
             }
             myReader.close();
-            System.out.println("\n");
+            System.out.println("=".repeat(40));
         } catch (FileNotFoundException e) {
             System.out.println("\nAlgo de errado aconteceu!\n");
         } catch (IOException e) {
@@ -335,7 +340,7 @@ public class Sistema {
                 // CSV → id;nome;senha;role
                 String linha = scanner.nextLine();
                 String[] dados = linha.split(";");
-                criarMembro(dados[1], dados[2], Funcao.valueOf(dados[3]));
+                criarMembro(dados[1], dados[2], Funcao.valueOf(dados[3]), dados[4]);
 
             }
 
@@ -399,24 +404,24 @@ public class Sistema {
 
     private void criarMembro(){
         List<String> dados = pedirMembro();
-        criarMembro(dados.get(0), dados.get(1), decodificarTipoMembro(dados.get(2)));
+        criarMembro(dados.get(0), dados.get(1), decodificarTipoMembro(dados.get(2)), dados.get(3));
     }
 
-    private void criarMembro(String nome, String senha, Funcao funcao) {
+    private void criarMembro(String nome, String senha, Funcao funcao, String email) {
         // Criar o membro
         Membro membro;
         switch(funcao) {
             case MOBILE_MEMBER:
-                membro = new MobileMember(nome, senha, funcao);
+                membro = new MobileMember(nome, senha, email, funcao);
                 break;
             case SCRIPT_GUY:
-                membro = new ScriptGuy(nome, senha, funcao);
+                membro = new ScriptGuy(nome, senha, email, funcao);
                 break;
             case HEAVY_LIFTER:
-                membro = new HeavyLifter(nome, senha, funcao);
+                membro = new HeavyLifter(nome, senha, email, funcao);
                 break;
             case BIG_BROTHER:
-                membro = new BigBrother(nome, senha, funcao);
+                membro = new BigBrother(nome, senha, email, funcao);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + funcao);

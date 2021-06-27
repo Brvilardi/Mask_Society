@@ -46,7 +46,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem, Assinatura
 
 
     public String toCSV(){
-        return Integer.toString(id) + ';' + username + ';' + senha + ';' + role;
+        return Integer.toString(id) + ';' + username + ';' + senha + ';' + role + ';' + email;
     }
 
     public static boolean autenticar(Membro membro, String possivelNome, String possivelSenha){

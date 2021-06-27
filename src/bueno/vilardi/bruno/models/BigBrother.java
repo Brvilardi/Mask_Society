@@ -8,8 +8,8 @@ public class BigBrother extends Membro{
     private String assinaturaRegular = "Sempre ajudando as pessoas membros ou não S2!";
     private String assinaturaExtra = "...";
 
-    public BigBrother(String username, String senha, Funcao role) {
-        super(username, senha, role);
+    public BigBrother(String username, String senha, String email, Funcao role) {
+        super(username, senha, email, role);
     }
 
 

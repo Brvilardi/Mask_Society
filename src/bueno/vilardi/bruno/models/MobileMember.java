@@ -8,8 +8,8 @@ public class MobileMember extends Membro{
     private String assinaturaRegular = "Happy Coding!";
     private String assinaturaExtra = "Happy_C0d1ng. Maskers";
 
-    public MobileMember(String username, String senha, Funcao role) {
-        super(username, senha, role);
+    public MobileMember(String username, String senha, String email, Funcao role) {
+        super(username, senha, email, role);
     }
 
     @Override
