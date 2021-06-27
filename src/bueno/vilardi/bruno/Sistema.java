@@ -69,17 +69,6 @@ public class Sistema {
 
     }
 
-    /**
-     * Contrutor da classe Sistema com alguns testes - TODO apagar isso
-     * @param op
-     */
-    public Sistema(boolean op){
-        this.membros = new HashMap<Integer, Membro>();
-        criarMembro("bruno", "1234", Funcao.HEAVY_LIFTER);
-        Membro usuario2 = new HeavyLifter("martin", "1234", Funcao.HEAVY_LIFTER);
-        membros.put(usuario2.id, usuario2);
-
-    }
 
     public void run(){
         boolean ligado = true;
