@@ -148,7 +148,7 @@ public class Sistema {
                 System.out.println(data);
             }
             myReader.close();
-            System.out.println("\n\n");
+            System.out.println("\n");
         } catch (FileNotFoundException e) {
             System.out.println("\nAlgo de errado aconteceu!\n");
         } catch (IOException e) {
