@@ -1,6 +1,7 @@
 package bueno.vilardi.bruno.models;
 
 import bueno.vilardi.bruno.enums.Funcao;
+import bueno.vilardi.bruno.enums.Horario;
 
 public class HeavyLifter extends Membro {
 
@@ -12,12 +13,16 @@ public class HeavyLifter extends Membro {
     }
 
     @Override
-    public void apresentar() {
-        System.out.println(getApresentacaoPadrao());
+    public String apresentar(Horario horario) {
+        switch (horario){
+            case REGULAR:
+                return assinaturaRegular;
+            case EXTRA:
+                return assinaturaExtra;
+            default:
+                return null;
+        }
     }
 
-    @Override
-    public void postarMensagem() {
 
-    }
 }

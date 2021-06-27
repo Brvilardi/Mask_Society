@@ -1,5 +1,7 @@
 package bueno.vilardi.bruno.interfaces;
 
+import bueno.vilardi.bruno.enums.Horario;
+
 public interface Apresentacao {
-    void apresentar();
+    String apresentar(Horario horario);
 }

@@ -53,13 +53,17 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         return false;
     }
 
-    public void postarMensagemPadrao(String mensagem, FileWriter fw){ //TODO colocar no sistema
+
+    // Métodos das interfaces
+    public abstract String apresentar(Horario horario);
+
+    public void postarMensagem(String mensagem, FileWriter fw){ //TODO colocar no sistema
         // Pega o horário atual
         String horario = Sistema.getTimeStamp();
 
         // Cria a mensagem
         String output = "";
-        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + getAssinatura() + "\n" + horario;
+        output = "\n@" + getNome() + ":\n" + mensagem + "\n" + apresentar(getHorario()) + "\n" + horario;
         output += "\n" + "-".repeat(40);
 
         // Escreve a mensagem no arquivo
@@ -68,21 +72,22 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+
 
     public boolean ehBigBrother(){
         return role.equals(Funcao.BIG_BROTHER);
     }
 
-    public String getAssinatura(){
+    public String getAssinatura(){ //TODO CONSERTAR ESTA MERDA
         switch (getHorario()){
             case REGULAR:
-                return assinaturaRegular;
+                return this.assinaturaRegular;
             case EXTRA:
-                return assinaturaExtra;
+                return "ext";
         }
-        return assinaturaRegular; //TODO consertar o switch
+        return "reg2";
     }
 
     public String getNome() {
@@ -94,7 +99,7 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
      * @return Horário atual do sistema
      */
     public Horario getHorario(){
-        return Horario.REGULAR; //TO_DO pegar horário do sistema
+        return Horario.REGULAR; //TODO pegar horário do sistema
     }
 
     public String getApresentacaoPadrao(){
@@ -110,4 +115,5 @@ public abstract class Membro implements Apresentacao, PostarMensagem {
                 ", role=" + role +
                 '}';
     }
+
 }

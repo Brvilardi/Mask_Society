@@ -1,6 +1,7 @@
 package bueno.vilardi.bruno;
 
 import bueno.vilardi.bruno.enums.Funcao;
+import bueno.vilardi.bruno.enums.Horario;
 import bueno.vilardi.bruno.models.*;
 
 
@@ -12,12 +13,14 @@ import java.util.*;
 public class Sistema {
 
     public Map<Integer, Membro> membros;
+    private Membro usuarioLogado;
+    private Horario horarioSistema;
     private Integer contadorId = 1;
     public Integer sistemaId = 1; //Podem existir diversos sistemas, caso a organização necessite separar fisicamente sistemas
     private Scanner scanner;
     private FileWriter fw;
     private String NOME_ARQUIVO_CSV = "arquivo_super_Secreto_nao_abrir.csv";
-    private Membro usuarioLogado;
+
 
 
 
@@ -30,6 +33,9 @@ public class Sistema {
 
         // Inicializa o scanner (delimitado por return)
         scanner = new Scanner(System.in).useDelimiter("\n");
+
+        // Inicializa o horário
+        horarioSistema = Horario.REGULAR;
 
         // Inicializa o FileWriter
         File tempFile = new File("mensagens.txt");
@@ -89,11 +95,12 @@ public class Sistema {
 
     private boolean exibirMenu() {
         System.out.println("Menu Inicial:");
+        System.out.println("O horário atual é: " + this.horarioSistema);
         System.out.println("Opções: \n1) Logar usuário \n2) Desligar Sitema");
+        System.out.println("Sua opção: ");
         Integer op = scanner.nextInt();
         switch (op){
             case 1:
-                System.out.println(membros);
                 if(logarUsuario()){
                     return exibirMenuUsuario();
                 } else{
@@ -113,18 +120,20 @@ public class Sistema {
         while (true) {
             // Exibição padrao de membro
             System.out.println("Menu de usuário. Olá, " + usuarioLogado.getNome());
+            System.out.println("O horário atual é: " + this.horarioSistema);
             System.out.println("Opções: \n1) Mandar uma mensagem \n2) Ver as mensagens postadas \n3) Deslogar usuario \n4) Desligar sistema");
             // Exibicao de Big Brother
             if (usuarioLogado.ehBigBrother()){
-                System.out.println("\nExclusivos de Big Brother: \n5) Criar membro \n6) Excluir membro");
+                System.out.println("\nExclusivos de Big Brother: \n5) Criar membro \n6) Excluir membro \n7) Trocar o horário");
             }
+            System.out.println("Sua opção: ");
 
             Integer op = scanner.nextInt();
 
             switch (op) { //return → sai do menu usuario (com true ele volta para o menu inicial e com false desliga sistema) e break continua no menu usario
                 case 1:
                     System.out.println("Digite sua mensagem: ");
-                    usuarioLogado.postarMensagemPadrao(scanner.next(), fw);
+                    usuarioLogado.postarMensagem(scanner.next(), fw);
                     break;
                 case 2:
                     exibirMensagens();
@@ -146,6 +155,34 @@ public class Sistema {
                 case 6:
                     if (usuarioLogado.ehBigBrother()){
                         excluirMembro();
+                        break;
+                    } else{
+                        System.out.println("Opção inválida!");
+                        break;
+                    }
+                case 7:
+                    if (usuarioLogado.ehBigBrother()){
+                        System.out.print("Tem certeza que deseja trocar o horário do sistema de ");
+                        switch (horarioSistema){
+                            case EXTRA:
+                                System.out.print("EXTRA para REGULAR?");
+                                break;
+                            case REGULAR:
+                                System.out.println("REGULAR para EXTRA?");
+                                break;
+                        }
+                        System.out.println("  (y/n)");
+                        if (scanner.next().equals("y")){
+                            switch (horarioSistema){
+                                case EXTRA:
+                                    horarioSistema = Horario.REGULAR;
+                                    break;
+                                case REGULAR:
+                                    horarioSistema = Horario.EXTRA;
+                                    break;
+                            }
+
+                        }
                         break;
                     } else{
                         System.out.println("Opção inválida!");
